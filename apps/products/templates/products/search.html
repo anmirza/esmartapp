@@ -1,0 +1,119 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Search{% endblock %}
+{% block header %}
+<div class="col-md-3 clearfix">
+						<div class="header-ctn">
+
+
+							<!-- Menu Toogle -->
+							<div class="menu-toggle">
+								<a href="#">
+									<i class="fa fa-bars"></i>
+									<span>Menu</span>
+								</a>
+							</div>
+							<!-- /Menu Toogle -->
+						</div>
+					</div>
+					<!-- /ACCOUNT -->
+				</div>
+				<!-- row -->
+			</div>
+			<!-- container -->
+		</div>
+		<!-- /MAIN HEADER -->
+{% endblock %}
+{% block frontpage %}
+
+<nav id="navigation">
+		<div class="container">
+			<!-- responsive-nav -->
+			<div id="responsive-nav">
+				<!-- NAV -->
+				<ul class="main-nav nav navbar-nav">
+					<li ><a href="{% url 'frontpage' %}">Home</a></li>
+					<li><a href="AboutUS.html">About US</a></li>
+					<li ><a  href="{% url 'contact' %}">Contact US</a></li>
+					{% if request.user.is_authenticated %}
+								<li><a href="{% url 'vendor_admin' %}"></i>My Account</a></li>
+								{% else %}
+								<li><a href="{% url 'signupas' %}"></i>Signup</a></li>
+								{% endif %}
+                    <li class="nav-item dropdown">
+
+        <a class="nav-link dropdown-toggle" href="{% url 'frontpage' %}" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			Category <i class="fa fa-caret-down" style="font-style:inherit;"> </i>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+			{% for category in menu_categories %}
+          <a class="dropdown-item" style="font-size: 15px; text-align: center; align: center;display: table; margin: auto;decorate: inherit;" href="{% url 'category' category.slug %}">{{ category.title }}</a><hr>
+			{% endfor %}
+        </div>
+      </li>
+
+				</ul>
+				<!-- /NAV -->
+			</div>
+			<!-- /responsive-nav -->
+		</div>
+	</nav>
+
+
+
+        <!-- MAIN HEADER -->
+
+<!-- SECTION -->
+	<div class="section">
+		<!-- container -->
+		<div class="container">
+			<!-- row -->
+			<div class="row">
+
+				<!-- section title -->
+				{% block category %}
+				<div class="col-md-12">
+					<div class="section-title">
+						<h3 class="title">Search Item For Term : "{{ query }}"</h3>
+						<!-- <div class="section-nav">
+								<ul class="section-tab-nav tab-nav">
+									<li class="active"><a data-toggle="tab" href="#tab1">Java</a></li>
+									<li><a data-toggle="tab" href="#tab1">Python</a></li>
+									<li><a data-toggle="tab" href="#tab1">Php</a></li>
+									<li><a data-toggle="tab" href="#tab1">Flutter</a></li>
+								</ul>
+							</div> -->
+					</div>
+				</div>
+
+				{% endblock %}
+				<!-- /section title -->
+
+				<!-- Products tab & slick -->
+				<div class="col-md-12">
+					<div class="row">
+						<div class="products-tabs">
+							<!-- tab -->
+							<div id="tab1" class="tab-pane active">
+								<div class="products-slick" data-nav="#slick-nav-1">
+
+									{% for product in products %}
+									    {% include 'products/parts/list_item.html' %}
+									{% endfor %}
+									</div>
+								<div id="slick-nav-1" class="products-slick-nav"></div>
+							</div>
+							<!-- /tab -->
+						</div>
+					</div>
+				</div>
+				<!-- Products tab & slick -->
+			</div>
+			<!-- /row -->
+		</div>
+		<!-- /container -->
+	</div>
+
+
+	<!-- /SECTION -->
+{% endblock %}

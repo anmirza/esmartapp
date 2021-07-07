@@ -1,0 +1,95 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Contact Us{% endblock %}
+
+{% block frontpage %}
+
+<nav id="navigation">
+		<div class="container">
+			<!-- responsive-nav -->
+			<div id="responsive-nav">
+				<!-- NAV -->
+				<ul class="main-nav nav navbar-nav">
+					<li ><a href="{% url 'frontpage' %}">Home</a></li>
+					<li><a href="AboutUS.html">About US</a></li>
+					<li class="active"><a  href="{% url 'contact' %}">Contact US</a></li>
+					{% if request.user.is_authenticated %}
+								<li><a href="{% url 'vendor_admin' %}"></i>My Account</a></li>
+								{% else %}
+								<li><a href="{% url 'signupas' %}"></i>Signup</a></li>
+								{% endif %}
+                    <li class="nav-item dropdown">
+
+        <a class="nav-link dropdown-toggle" href="{% url 'frontpage' %}" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			Category <i class="fa fa-caret-down" style="font-style:inherit;"> </i>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+			{% for category in menu_categories %}
+          <a class="dropdown-item" style="font-size: 15px; text-align: center; align: center;display: table; margin: auto;decorate: inherit;" href="{% url 'category' category.slug %}">{{ category.title }}</a><hr>
+			{% endfor %}
+        </div>
+      </li>
+
+				</ul>
+				<!-- /NAV -->
+			</div>
+			<!-- /responsive-nav -->
+		</div>
+	</nav>
+
+
+
+        <!-- MAIN HEADER -->
+
+
+    <!-- Contact US Form -->
+    <div class="container Login-template">
+        <div class="row">
+            <div class="col-md-12 login-header">
+                <h3><b>About Us</b></h3>
+            </div>
+            <div class="col-md-12 col-xs-12 mx-auto headr">
+
+              <div class="about-container">
+                <div class="about-card card0">
+                  <div class="card-border">
+                    <h2 class="about-card-title">Muhammad Sohail Khalid</h2>
+                    <div class="card-icons">
+                      <i class="fa fa-codepen" aria-hidden="true"></i>
+                      <i class="fa fa-instagram" aria-hidden="true"></i>
+                      <i class="fa fa-dribbble" aria-hidden="true"></i>
+                      <i class="fa fa-twitter" aria-hidden="true"></i>
+                      <i class="fa fa-facebook" aria-hidden="true"></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="about-card card1">
+                  <div class="card-border">
+                    <h2 class="about-card-title">Ahmed Nabeel</h2>
+                    <div class="card-icons">
+                      <a href="#" style="text-decoration: none; color: white;" style="opacity: 0; transition: opacity 1s;"><i class="fa fa-codepen" aria-hidden="true" ></i></a>
+                      <a href="https://www.instagram.com/" style="text-decoration: none; color: white; "><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                      <a href="https://dribbble.com/" style="text-decoration: none; color: white;"><i class="fa fa-dribbble" aria-hidden="true"></i></a>
+                      <a href="https://twitter.com/?lang=en" style="text-decoration: none; color: white;"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                      <a href="https://www.facebook.com/" style="text-decoration: none; color: white;"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                    </div>
+                  </div>
+                </div>
+                <div class="about-card card2">
+                  <div class="card-border">
+                    <h2 class="about-card-title">Muhammad Tayyab Ahmed</h2>
+                    <div class="card-icons">
+                      <i class="fa fa-codepen" aria-hidden="true"></i>
+                      <i class="fa fa-instagram" aria-hidden="true"></i>
+                      <i class="fa fa-dribbble" aria-hidden="true"></i>
+                      <i class="fa fa-twitter" aria-hidden="true"></i>
+                      <i class="fa fa-facebook" aria-hidden="true"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Contact US Form -->
+{% endblock %}

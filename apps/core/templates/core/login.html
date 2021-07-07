@@ -1,0 +1,106 @@
+{% extends 'core/base.html' %}
+{% load widget_tweaks %}
+
+
+{% block title %}Login{% endblock %}
+{% block header %}
+<div class="col-md-3 clearfix">
+						<div class="header-ctn">
+
+							<!-- Menu Toogle -->
+							<div class="menu-toggle">
+								<a href="#">
+									<i class="fa fa-bars"></i>
+									<span>Menu</span>
+								</a>
+							</div>
+							<!-- /Menu Toogle -->
+						</div>
+					</div>
+					<!-- /ACCOUNT -->
+				</div>
+				<!-- row -->
+			</div>
+			<!-- container -->
+		</div>
+		<!-- /MAIN HEADER -->
+{% endblock %}
+
+{% block become %}
+<nav id="navigation">
+		<div class="container">
+			<!-- responsive-nav -->
+			<div id="responsive-nav">
+				<!-- NAV -->
+				<ul class="main-nav nav navbar-nav">
+					<li ><a href="{% url 'frontpage' %}">Home</a></li>
+					<li><a href="AboutUS.html">About US</a></li>
+					<li><a  href="{% url 'contact' %}">Contact US</a></li>
+					{% if request.user.is_authenticated %}
+								<li><a href="{% url 'vendor_admin' %}"></i>My Account</a></li>
+                    <li><a href="{% url 'add_product' %}"></i>Add Product</a></li>
+								{% else %}
+								<li><a href="{% url 'signupas' %}"></i>Signup</a></li>
+								{% endif %}
+					<li class="nav-item dropdown">
+
+        <a class="nav-link dropdown-toggle" href="{% url 'frontpage' %}" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			Category <i class="fa fa-caret-down" style="font-style:inherit;"> </i>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+			{% for category in menu_categories %}
+          <a class="dropdown-item" style="font-size: 15px; text-align: center; align: center;display: table; margin: auto;decorate: inherit;" href="{% url 'category' category.slug %}">{{ category.title }}</a><hr>
+			{% endfor %}
+        </div>
+      </li>
+
+				</ul>
+				<!-- /NAV -->
+			</div>
+			<!-- /responsive-nav -->
+		</div>
+	</nav>
+ <div class="container Login-template">
+    <div class="row">
+      <div class="col-md-12 login-header">
+        <h3><b>Login</b></h3>
+      </div>
+      <div class="col-md-6 headr1 ">
+    <form method="POST" action=".">
+        {% csrf_token %}
+
+       <fieldset class="Login-form">
+
+
+				<div class="form-group">
+              <label >Username</label>
+					{% render_field form.username class="form-control" placeholder="Enter Username" name="username" %}
+					{{ field.errors }}
+            </div>
+            <div class="form-group">
+              <label >Password:</label>
+				{% render_field form.password class="form-control" placeholder="Enter Password" name="password" %}
+				{{ field.errors }}
+
+            </div>
+            <button type="submit" class="btn btn-danger login-bton" value="Submit">
+              <i class="fa fa-lock px-2"></i>
+              Login</button>
+          </fieldset>
+
+    </form>
+	</div>
+		<div class="col-md-6 headr">
+        <h4>Not Registered?</h4>
+
+
+          <a href="{% url 'signupas' %}" class="btn btn-danger signup-bton"><i class="fa fa-user px-2"></i>
+			  Signup
+            </a>
+      </div>
+    </div>
+ </div>
+ </div>
+
+
+{% endblock %}
