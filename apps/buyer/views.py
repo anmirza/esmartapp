@@ -1,8 +1,14 @@
 
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from django.shortcuts import render, redirect, get_object_or_404
+from django.http.response import HttpResponse
+from django.shortcuts import render, redirect
 from .models import Buyer
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
+
+from django.conf import settings
 
 
 # Create your views here.
@@ -24,21 +30,27 @@ def become_buyer(request):
 
     return render(request, 'buyer/become_buyer.html', {'form': form})
 
-
+@login_required
 def profile(request):
-    context = {}
-    ch = User.objects.filter(username=request.user.username)
-    data = User.objects.get(username=request.user.username)
-    context["data"] = data
+    buyer = request.user.buyer
+    subject = 'Thank you for registering to our site'
+    email_from = settings.EMAIL_HOST_USER
+    recipient_list = ['anmirza68@gmail.com']
+    #send=send_mail( subject, message, email_from, recipient_list )
+    html_temp = "buyer/msg.html"
+    html_msg = render_to_string(html_temp)
+    msgs = EmailMultiAlternatives(subject,html_msg,email_from,recipient_list)
+    msgs.attach_alternative(html_msg, "text/html")
+    return render(request, 'buyer/buyer_profile.html', {'buyer': buyer})
 
-    all_orders = []
-    orders = OrderItem.objects.filter(ch)
-    for order in orders:
-        products = []
-        ord = {
-            "order": order,
-            "products": products,
-        }
-        all_orders.append(ord)
-    context["order_history"] = all_orders
-    return render(request, 'buyer/buyer_profile.html', context)
+def send(link,email):
+    subject = 'Thank you for registering to our site'
+    email_from = settings.EMAIL_HOST_USER
+    recipient_list = ['anmirza68@gmail.com']
+    #send=send_mail( subject, message, email_from, recipient_list )
+    html_temp = '<a href="{% url home %}">hh</a>'
+    html_msg = render_to_string(html_temp,{'link':link})
+    msg = EmailMultiAlternatives(subject,html_msg,email_from,recipient_list)
+    msg.content_subtype='html'
+    msg.send()
+    return HttpResponse('redirect to a new page')
